@@ -18,18 +18,28 @@
 #define NOV = 30;
 #define DEC = 31;
 
-typedef struct date_time {
+typedef struct time_struct {
+    int hour;
+    int minute;
+} time_struct_t;
+
+typedef struct date_struct {
     int year;
     int month;
     int day;
-    int hour;
-    int minute;
-} date_time_t;
+} date_struct_t;
+
+typedef struct date_time_struct {
+    date_struct_t date;
+    time_struct_t time;
+} date_time_struct_t;
 
 typedef struct event {
     char * name;
-    date_time_t start;
-    date_time_t end;
+    date_time_struct_t start;
+    date_time_struct_t end;
 } event_struct_t;
+
+
 
 #endif //CALENDAR_EVENTS_H
