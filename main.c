@@ -13,7 +13,7 @@ void print_date_time(date_time_struct_t date_time);
 
 
 int main() {
-    date_time_struct_t test = {2023, 2, 29, 24, 0};
+    date_time_struct_t test = {1900, 14, 29, 24, 60};
 
 
     print_time(test.time);
@@ -83,7 +83,7 @@ void adjust_date_time(date_time_struct_t *date_time) {
 
 int is_leap_year(int year) {
     if (!(year % 100)) {
-        if (!(year % 4)) {
+        if (!(year % 400)) {
             return 1;
         }
         else {
