@@ -5,6 +5,7 @@
 void adjust_time(time_struct_t *time);
 void adjust_date(date_struct_t *date);
 void adjust_date_time(date_time_struct_t *date_time);
+void advanced_adjustment(date_time_struct_t *date_time);
 int is_leap_year(int year);
 
 void print_time(time_struct_t time);
@@ -26,8 +27,27 @@ int main() {
     print_date(test.date);
     print_date_time(test);
 
+    test = (date_time_struct_t) {1900, 14, 29, 24, 60};
+
+    advanced_adjustment(&test);
+
+    print_time(test.time);
+    print_date(test.date);
+    print_date_time(test);
 
     return 0;
+}
+
+void advanced_adjustment(date_time_struct_t *date_time) {
+    while (date_time->time.minute >= 60) {
+        date_time->time.minute -= 60;
+        date_time->time.hour++;
+    }
+
+    while (date_time->time.hour >= 24) {
+        date_time->time.hour -= 24;
+        date_time->date.day++;
+    }
 }
 
 void adjust_time(time_struct_t *time) {
