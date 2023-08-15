@@ -3,13 +3,14 @@
 //
 
 #include <stdio.h>
+#include <time.h>
 
 #ifndef CALENDAR_DATE_TIME_H
 #define CALENDAR_DATE_TIME_H
 
 typedef struct time_struct {
     int hour;
-    int minute;
+    long long minute;
 } time_struct_t;
 
 typedef struct date_struct {
@@ -32,6 +33,7 @@ void advanced_adjustment(date_time_struct_t *date_time);
 
 int is_leap_year(int year);
 int days_in_month(date_struct_t date);
+date_time_struct_t current_time();
 
 void print_time(time_struct_t time);
 void print_date(date_struct_t date);
@@ -126,9 +128,20 @@ int days_in_month(date_struct_t date) {
     }
 }
 
+date_time_struct_t current_time() {
+    date_time_struct_t current_time = {1970, 1, 1, 0,0};
+
+    time_t seconds = time(NULL);
+
+    current_time.time.minute = seconds / 60;
+
+    advanced_adjustment(&current_time);
+
+    return current_time;
+}
 
 void print_time(time_struct_t time) {
-    printf("%02d:%02d\n", time.hour, time.minute);
+    printf("%02d:%02lld\n", time.hour, time.minute);
 }
 
 void print_date(date_struct_t date) {
@@ -136,7 +149,7 @@ void print_date(date_struct_t date) {
 }
 
 void print_date_time(date_time_struct_t date_time) {
-    printf("%d/%02d/%02d %02d:%02d\n", date_time.date.year, date_time.date.month, date_time.date.day,
+    printf("%d/%02d/%02d %02d:%02lld\n", date_time.date.year, date_time.date.month, date_time.date.day,
            date_time.time.hour, date_time.time.minute);
 }
 

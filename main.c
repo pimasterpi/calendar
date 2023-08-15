@@ -25,5 +25,7 @@ int main() {
     print_date(test.date);
     print_date_time(test);
 
+    print_date_time(current_time());
+
     return 0;
 }
