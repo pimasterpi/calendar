@@ -3,13 +3,21 @@
 #include <stdio.h>
 
 void adjust_time(time_struct_t *time);
+
 void adjust_date(date_struct_t *date);
+
 void adjust_date_time(date_time_struct_t *date_time);
+
 void advanced_adjustment(date_time_struct_t *date_time);
+
 int is_leap_year(int year);
 
+int days_in_month(date_struct_t date);
+
 void print_time(time_struct_t time);
+
 void print_date(date_struct_t date);
+
 void print_date_time(date_time_struct_t date_time);
 
 
@@ -48,6 +56,10 @@ void advanced_adjustment(date_time_struct_t *date_time) {
         date_time->time.hour -= 24;
         date_time->date.day++;
     }
+
+    while ((date_time->date.day >= )) {
+
+    }
 }
 
 void adjust_time(time_struct_t *time) {
@@ -64,36 +76,9 @@ void adjust_date(date_struct_t *date) {
     }
 
 
-    if (((date->month < 8) && (date->month % 2)) || ((date->month >= 8) && !(date->month % 2))) {
-        date->day = date->day % 31;
+    int days = days_in_month(*date);
 
-        if (!(date->day % 31)) {
-            date->day += 31;
-        }
-    }
-    else if (date->month == 2) {
-        if (is_leap_year(date->year)) {
-            date->day = date->day % 29;
-
-            if (!(date->day % 29)) {
-                date->day += 29;
-            }
-        }
-        else {
-            date->day = date->day % 28;
-
-            if (!(date->day % 28)) {
-                date->day += 28;
-            }
-        }
-    }
-    else {
-        date->day = date->day % 30;
-
-        if (!(date->day % 30)) {
-            date->day += 30;
-        }
-    }
+    date->day = date->day % days;
 }
 
 void adjust_date_time(date_time_struct_t *date_time) {
@@ -105,18 +90,37 @@ int is_leap_year(int year) {
     if (!(year % 100)) {
         if (!(year % 400)) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
-    }
-    else if (!(year % 4)) {
+    } else if (!(year % 4)) {
         return 1;
-    }
-    else {
+    } else {
         return 0;
     }
+}
 
+int days_in_month(date_struct_t date) {
+    switch (date.month) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12: {
+            return 31;
+        }
+        case 4:
+        case 6:
+        case 9:
+        case 11: {
+            return 30;
+        }
+        case 2: {
+            return (is_leap_year(date.year)) ? 29 : 28;
+        }
+    }
 }
 
 
@@ -129,5 +133,6 @@ void print_date(date_struct_t date) {
 }
 
 void print_date_time(date_time_struct_t date_time) {
-    printf("%d/%02d/%02d %02d:%02d\n", date_time.date.year, date_time.date.month, date_time.date.day, date_time.time.hour, date_time.time.minute);
+    printf("%d/%02d/%02d %02d:%02d\n", date_time.date.year, date_time.date.month, date_time.date.day,
+           date_time.time.hour, date_time.time.minute);
 }
