@@ -22,7 +22,7 @@ void print_date_time(date_time_struct_t date_time);
 
 
 int main() {
-    date_time_struct_t test = {1900, 14, 29, 24, 60};
+    date_time_struct_t test = {1999, 14, 29, 24, 60};
 
 
     print_time(test.time);
@@ -35,7 +35,7 @@ int main() {
     print_date(test.date);
     print_date_time(test);
 
-    test = (date_time_struct_t) {1900, 14, 29, 24, 60};
+    test = (date_time_struct_t) {1999, 14, 29, 24, 60};
 
     advanced_adjustment(&test);
 
@@ -57,8 +57,18 @@ void advanced_adjustment(date_time_struct_t *date_time) {
         date_time->date.day++;
     }
 
-    while ((date_time->date.day >= )) {
+    while (date_time->date.month > 12) {
+        date_time->date.month -= 12;
+        date_time->date.year++;
+    }
 
+    while (date_time->date.day > days_in_month(date_time->date)) {
+        date_time->date.day -= days_in_month(date_time->date);
+        date_time->date.month++;
+        if (date_time->date.month > 12) {
+            date_time->date.month -= 12;
+            date_time->date.year++;
+        }
     }
 }
 
